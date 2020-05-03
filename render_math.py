@@ -29,11 +29,13 @@ template builders that want to adjust the look and feel of
 the math.  See README for more details.
 """
 
+# Core Library modules
 import collections
 import os
 import sys
 
-from pelican import signals, generators
+# Third party modules
+from pelican import generators, signals
 
 try:
     from bs4 import BeautifulSoup
@@ -386,8 +388,7 @@ def process_summary(article):
             summary = summary_parsed.decode()
 
         article._summary = "{}<script type='text/javascript'>{}</script>".format(
-            summary,
-            process_summary.mathjax_script,
+            summary, process_summary.mathjax_script,
         )
 
 
@@ -435,7 +436,8 @@ def process_mathjax_script(mathjax_settings):
 
     # Read the mathjax javascript template from file
     with open(
-        os.path.dirname(os.path.realpath(__file__)) + "/mathjax_script_template") as mathjax_script_template:
+        os.path.dirname(os.path.realpath(__file__)) + "/mathjax_script_template"
+    ) as mathjax_script_template:
         mathjax_template = mathjax_script_template.read()
     return mathjax_template.format(**mathjax_settings)
 

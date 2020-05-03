@@ -1,6 +1,9 @@
+# Core Library modules
 import os
 import unittest
-from render_math import parse_tex_macros, _parse_macro, _filter_duplicates
+
+# First party modules
+from render_math import _filter_duplicates, _parse_macro, parse_tex_macros
 
 
 class TestParseMacros(unittest.TestCase):

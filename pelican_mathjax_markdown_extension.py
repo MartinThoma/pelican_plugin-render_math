@@ -7,10 +7,9 @@ gives Pelican the ability to use Mathjax as a "first class
 citizen" of the blog
 """
 
+# Third party modules
 import markdown
-
-from markdown.util import etree
-from markdown.util import AtomicString
+from markdown.util import AtomicString, etree
 
 
 class PelicanMathJaxPattern(markdown.inlinepatterns.Pattern):
