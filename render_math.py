@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Math Render Plugin for Pelican
 ==============================
@@ -232,13 +231,13 @@ def process_settings(pelicanobj):
                 if "args" in macro.keys():
                     # number of arguments > 1
                     text_lines.append(
-                        "{0}: ['{1}', {2}]".format(
+                        "{}: ['{}', {}]".format(
                             macro["name"], macro["definition"], macro["args"]
                         )
                     )
                 else:
                     text_lines.append(
-                        "{0}: '{1}'".format(macro["name"], macro["definition"])
+                        "{}: '{}'".format(macro["name"], macro["definition"])
                     )
             mathjax_settings[key] = "{" + ", ".join(text_lines) + "}"
 
@@ -249,10 +248,10 @@ def _load_macro_definitions(*args):
     """Returns list of lines from files, use absolute path.
 
     Example: [{'filename': '/home/user/defs.text', 'line_num': 1,
-     'def': '\newcommand{\circ}{2 \pi R}'}]"""
+     'def': '\newcommand{\\circ}{2 \\pi R}'}]"""
     output_lines = []
     for arg in args:
-        with open(arg, "rt") as input_file:
+        with open(arg) as input_file:
             lines = input_file.read().splitlines()
             for index, value in enumerate(lines):
                 line_num = index + 1
@@ -386,7 +385,7 @@ def process_summary(article):
             math[-1].string = "%s ..." % full_text
             summary = summary_parsed.decode()
 
-        article._summary = "%s<script type='text/javascript'>%s</script>" % (
+        article._summary = "{}<script type='text/javascript'>{}</script>".format(
             summary,
             process_summary.mathjax_script,
         )
@@ -436,8 +435,7 @@ def process_mathjax_script(mathjax_settings):
 
     # Read the mathjax javascript template from file
     with open(
-        os.path.dirname(os.path.realpath(__file__)) + "/mathjax_script_template", "r"
-    ) as mathjax_script_template:
+        os.path.dirname(os.path.realpath(__file__)) + "/mathjax_script_template") as mathjax_script_template:
         mathjax_template = mathjax_script_template.read()
     return mathjax_template.format(**mathjax_settings)
 
